@@ -4,9 +4,13 @@ const isDev = require('electron-is-dev')
 const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
+// Module to ipcMain.
+const ipcMain = electron.ipcMain
 
 const path = require('path')
 const url = require('url')
+
+const { autoUpdater } = require('electron-updater')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -47,6 +51,10 @@ function createWindow() {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
+  mainWindow.once('ready-to-show', () => {
+    autoUpdater.checkForUpdatesAndNotify()
+  })
 }
 
 // This method will be called when Electron has finished
@@ -67,4 +75,20 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow()
   }
+})
+
+ipcMain.on('app_version', (event) => {
+  event.sender.send('app_version', { version: app.getVersion() })
+})
+
+ipcMain.on('restart_app', () => {
+  autoUpdater.quitAndInstall()
+})
+
+autoUpdater.on('update-available', () => {
+  mainWindow.webContents.send('update_available')
+})
+
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.webContents.send('update_downloaded')
 })
