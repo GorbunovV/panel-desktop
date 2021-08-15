@@ -1,0 +1,6 @@
+.meta {
+  height: 100%;
+  width: 200px;
+  box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.12) inset;
+  border-radius: 30px;
+}

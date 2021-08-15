@@ -1,0 +1,52 @@
+@import-normalize;
+
+@font-face {
+  font-family: 'Ubuntu-Bold';
+  src: url('./assets/fonts/Ubuntu-Bold.woff2') format('woff2'), url('./assets/fonts/Ubuntu-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('./assets/fonts/Ubuntu-Regular.woff2') format('woff2'),
+    url('./assets/fonts/Ubuntu-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./assets/fonts/Roboto-Regular.woff2') format('woff2'),
+    url('./assets/fonts/Roboto-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #f2f2f2;
+  line-height: 1.4;
+  font-size: 14px;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  color: #000;
+  width: 800px;
+  height: 1280px;
+}
+
+#root {
+  height: 100%;
+}

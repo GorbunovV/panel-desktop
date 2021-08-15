@@ -1,0 +1,13 @@
+.input {
+  padding: 50px 36px;
+  flex-shrink: 0;
+}
+
+.text {
+  display: block;
+  text-align: center;
+  font-size: 240px;
+  min-height: 260px;
+  line-height: 1;
+  font-family: 'Ubuntu-Bold';
+}
