@@ -9,6 +9,7 @@ const AppRaw: FC = () => {
   const ipcRenderer = electron.ipcRenderer
 
   const [version, setVersion] = useState('')
+  const [status, setStatus] = useState('Work')
 
   useEffect(() => {
     ipcRenderer.send('app_version')
@@ -20,10 +21,12 @@ const AppRaw: FC = () => {
     ipcRenderer.on('update_available', () => {
       ipcRenderer.removeAllListeners('update_available')
       console.log('Downloading now...')
+      setStatus('Downloading')
     })
     ipcRenderer.on('update_downloaded', () => {
       ipcRenderer.removeAllListeners('update_downloaded')
       console.log('Update Downloaded')
+      setStatus('Downloaded')
       ipcRenderer.send('restart_app')
     })
   }, [ipcRenderer])
@@ -32,6 +35,7 @@ const AppRaw: FC = () => {
     <div className={classes.container}>
       <Dialing />
       {version && <div className={classes.version}>{version}</div>}
+      {status && <div className={classes.status}>{status}</div>}
     </div>
   )
 }

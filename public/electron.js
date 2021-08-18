@@ -28,8 +28,6 @@ function createWindow() {
     webPreferences: { nodeIntegration: true, contextIsolation: false },
   })
 
-  console.log('__dirname', __dirname)
-
   // and load the index.html of the app.
   mainWindow.loadURL(
     isDev

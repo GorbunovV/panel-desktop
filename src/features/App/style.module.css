@@ -11,3 +11,10 @@
   left: 50%;
   transform: translateX(-50%);
 }
+
+.status {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
