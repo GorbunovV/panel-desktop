@@ -25,19 +25,21 @@ function createWindow() {
     y: 0,
     width: 800,
     height: 1280,
-    webPreferences: { nodeIntegration: true, contextIsolation: false, enableRemoteModule: true },
+    webPreferences: { nodeIntegration: true, contextIsolation: false },
   })
 
-  // and load the index.html of the app.
-  const startUrl = isDev
-    ? 'http://localhost:3000'
-    : url.format({
-        pathname: path.join(__dirname, '/../build/index.html'),
-        protocol: 'file:',
-        slashes: true,
-      })
+  console.log('__dirname', __dirname)
 
-  mainWindow.loadURL(startUrl)
+  // and load the index.html of the app.
+  mainWindow.loadURL(
+    isDev
+      ? 'http://localhost:3000'
+      : url.format({
+          pathname: path.join(__dirname, '../build/index.html'),
+          protocol: 'file:',
+          slashes: true,
+        }),
+  )
 
   // Open the DevTools.
   if (isDev) {
