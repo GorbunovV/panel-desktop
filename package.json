@@ -1,6 +1,6 @@
 {
   "name": "panel-desktop",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "private": false,
   "main": "public/electron.js",
   "homepage": "./",
