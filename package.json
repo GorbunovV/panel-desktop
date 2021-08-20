@@ -1,6 +1,6 @@
 {
   "name": "panel-desktop",
-  "version": "5.0.0",
+  "version": "1.0.0",
   "private": false,
   "main": "public/electron.js",
   "homepage": "./",
@@ -13,8 +13,11 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.3.1",
-    "electron-updater": "^4.3.9",
     "electron-is-dev": "^2.0.0",
+    "electron-osx-sign": "^0.5.0",
+    "electron-packager": "^15.3.0",
+    "electron-updater": "^4.3.9",
+    "global": "^4.4.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -28,14 +31,20 @@
     "react-build": "react-scripts build",
     "dev": "concurrently -k \"BROWSER=none yarn react-start\" \"yarn:electron\"",
     "electron": "wait-on tcp:3000 && electron .",
-    "build": "yarn react-build && electron-builder build --mac --publish never", 
+    "build": "yarn react-build && electron-builder build --mac --publish never",
     "deploy": "yarn react-build && electron-builder build --mac --publish always"
   },
   "build": {
-    "files": [
-      "build/**/*",
-      "node_modules/**/*"
-    ]
+    "appId": "by.gmar.homeidpanel",
+    "productName": "HomeID Panel",
+    "afterSign": "./notarize.js",
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": "default",
+      "hardenedRuntime": true,
+      "entitlements": "build/entitlements.mac.plist",
+      "gatekeeperAssess": false
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -55,15 +64,15 @@
       "last 1 safari version"
     ]
   },
-  
   "devDependencies": {
     "concurrently": "^6.2.1",
     "electron": "^13.1.9",
     "electron-builder": "^22.11.7",
+    "electron-notarize": "^1.1.0",
     "wait-on": "^6.0.0"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/GorbunovV/panel-desktop-releases.git"
+    "type": "git",
+    "url": "https://github.com/GorbunovV/panel-desktop-releases.git"
   }
 }
