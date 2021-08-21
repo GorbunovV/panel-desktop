@@ -1,16 +1,13 @@
-const electron = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const isDev = require('electron-is-dev')
-// Module to control application life.
-const app = electron.app
-// Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow
-// Module to ipcMain.
-const ipcMain = electron.ipcMain
 
 const path = require('path')
 const url = require('url')
 
 const { autoUpdater } = require('electron-updater')
+
+// Disable security warnings and set react app path on dev env
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -51,16 +48,18 @@ function createWindow() {
     // when you should delete the corresponding element.
     mainWindow = null
   })
-
-  mainWindow.once('ready-to-show', () => {
-    autoUpdater.checkForUpdatesAndNotify()
-  })
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+  createWindow()
+
+  setTimeout(() => {
+    autoUpdater.checkForUpdatesAndNotify()
+  }, 30000)
+})
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
@@ -85,8 +84,16 @@ ipcMain.on('restart_app', () => {
   autoUpdater.quitAndInstall()
 })
 
+autoUpdater.on('checking-for-update', () => {
+  mainWindow.webContents.send('checking_for_update')
+})
+
 autoUpdater.on('update-available', () => {
   mainWindow.webContents.send('update_available')
+})
+
+autoUpdater.on('update-not-available', () => {
+  mainWindow.webContents.send('update_not_available')
 })
 
 autoUpdater.on('update-downloaded', () => {
